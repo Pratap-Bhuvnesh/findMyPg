@@ -47,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function pgs()
+    {
+        return $this->hasMany(PG::class, 'owner_id');
+    }
 }
