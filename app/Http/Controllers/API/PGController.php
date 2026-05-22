@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\PG;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PGController extends Controller
 {
@@ -24,8 +25,25 @@ class PGController extends Controller
         if ($request->food_available) {
             $query->where('food_available', true);
         }
+        $pgs = $query->with(['owner', 'facilities'])->get();
+        if ($pgs->isNotEmpty()) {
+           
+            // 3. Collect all parent IDs to fetch images in bulk
+            $pgIds = $pgs->pluck('id')->toArray();
 
-        return response()->json($query->with('owner')->get());
+            // 4. Run exactly ONE bulk database query for all relevant images
+            $allImages = DB::table('pg_images')
+                ->whereIn('pg_id', $pgIds)
+                ->orderBy('display_order', 'asc')
+                ->get()
+                ->groupBy('pg_id'); // Groups items by their pg_id automatically
+             // 5. Map the pre-grouped images onto each PG model row
+            $pgs->each(function ($pg) use ($allImages) {
+                // Assign the grouped collection, or an empty collection if no images exist
+                $pg->images = $allImages->get($pg->id, collect([]));
+            });
+        }
+        return response()->json($pgs);
     }
 
     public function store(Request $request){

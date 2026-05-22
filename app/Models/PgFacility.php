@@ -11,9 +11,7 @@ class PgFacility extends Model
     use HasFactory;
     protected $fillable = [
         'pg_id',
-        'wifi',
-        'ac',
-        'laundry',
-        'parking'
+        'amenities',
+        'available'
     ];
 }

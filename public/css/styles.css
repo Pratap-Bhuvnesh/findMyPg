@@ -1,0 +1,301 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+   background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #333;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  background: #1976d2;
+  color: #fff;
+}
+
+.navbar a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  padding: 70px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-container {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+.hero-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0 30px;
+}
+
+/* ===== SEARCH CARD ===== */
+.search-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== INPUTS ===== */
+.input-group input,
+.input-row input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 10px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus,
+.input-row input:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33,150,243,0.1);
+}
+
+/* ===== ROW ===== */
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* ===== CHECKBOX ===== */
+.checkbox-row {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 14px;
+}
+
+/* ===== BUTTON ===== */
+.search-btn,
+button {
+  margin-top: 20px;
+  padding: 12px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-btn:hover,
+button:hover {
+  background: #1565c0;
+}
+
+/* ===== FEATURES ===== */
+/* ===== FEATURES ===== */
+.features {
+  padding: 50px 20px;
+  text-align: center;
+  background:#e8e5e5;
+  
+}
+
+.feature-box {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* CARD */
+.feature-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.3s;
+  text-align: center;
+  
+  
+}
+
+/* HOVER EFFECT */
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* ICON */
+.feature-card .icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.feature-card h3 {
+  margin-bottom: 10px;
+  color: #1976d2;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #555;
+}
+/* ===== PG LIST ===== */
+.pg-preview {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.pg-card {
+  display: flex;
+  gap: 15px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  background: #fff;
+  align-items: center;
+}
+
+.pg-card img {
+  width: 150px;
+  border-radius: 8px;
+}
+/* ===== PG INFO ===== */
+.pg-info {
+  text-align: left;
+}
+
+/* ===== RATING ===== */
+.rating {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stars {
+  color: #ffc107; /* gold stars */
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.rating-value {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+/* ===== CTA ===== */
+.cta {
+  background: #e8e5e5;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #1976d2;
+  color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  .checkbox-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feature-box {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature {
+    width: 100%;
+  }
+
+  .pg-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pg-card img {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero {
+    padding: 50px 15px;
+  }
+
+  .search-card {
+    padding: 15px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+}
