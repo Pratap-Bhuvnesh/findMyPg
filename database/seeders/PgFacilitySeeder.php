@@ -14,16 +14,17 @@ class PgFacilitySeeder extends Seeder
      */
     public function run(): void
     {
-        $pgs = Pg::all();
 
+        $pgs = Pg::all();
         if ($pgs->isEmpty()) {
             $pgs = Pg::factory()->count(5)->create();
         }
 
         foreach ($pgs as $pg) {
-            PgFacility::factory()->create([
+           /*  PgFacility::factory()->create([
                 'pg_id' => $pg->id
-            ]);
+            ]); */
+            PgFacility::factory()->createMultipleRows(4, $pg->id);
         }
     }
 }

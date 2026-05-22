@@ -25,6 +25,9 @@ class PgFactory extends Factory
             'description' => $this->faker->paragraph,
             'price' => $this->faker->numberBetween(3000, 15000),
             'location' => $this->faker->city,
+             'latitude' => $this->faker->latitude(), 
+            // Generates a valid longitude between -180 and 180
+            'longitude' => $this->faker->longitude(),
             'food_available' => $this->faker->boolean,
         ];
     }

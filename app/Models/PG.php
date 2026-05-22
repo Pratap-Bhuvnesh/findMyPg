@@ -22,9 +22,6 @@ class PG extends Model{
         return $this->belongsTo(User::class, 'owner_id');
     }
     public function facilities(){
-        return $this->hasOne(PgFacility::class, 'pg_id');
-    }
-    public function images() {
-        return $this->hasMany(PgImage::class, 'pg_id');
-    }
+        return $this->hasMany(PgFacility::class, 'pg_id');
+    }   
 }

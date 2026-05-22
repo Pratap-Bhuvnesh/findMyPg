@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\PgSeeder;
 use Database\Seeders\PgFacilitySeeder;
 use Database\Seeders\ReviewSeeder;
+use Database\Seeders\PgImageSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PgSeeder::class,
             PgFacilitySeeder::class,
             ReviewSeeder::class,
+			PgImageSeeder::class,
         ]);
     }
 }
