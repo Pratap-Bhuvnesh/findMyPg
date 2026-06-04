@@ -26,7 +26,7 @@ class PgSeeder extends Seeder
 
         // Create PGs for each owner
         foreach ($owners as $owner) {
-            Pg::factory()->count(3)->create([
+            Pg::factory()->count(100)->create([
                 'owner_id' => $owner->id
             ]);
         }

@@ -35,6 +35,8 @@ class PgFactory extends Factory
             'longitude' => $lon2,
             'distance' => $distanceBetween, // Distance in kilometers
             'food_available' => $this->faker->boolean,
+            'gender' => $this->faker->randomElement(['Boys', 'Girls', 'Co-ed']),
+            'is_verified' => $this->faker->boolean,
         ];
     }
     function calculateDistance($lat1, $lon1, $lat2, $lon2, $unit = 'km') 

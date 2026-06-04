@@ -9,6 +9,7 @@ use Database\Seeders\PgSeeder;
 use Database\Seeders\PgFacilitySeeder;
 use Database\Seeders\ReviewSeeder;
 use Database\Seeders\PgImageSeeder;
+use Database\Seeders\PGInquirySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             PgFacilitySeeder::class,
             ReviewSeeder::class,
 			PgImageSeeder::class,
+            PGInquirySeeder::class,            
         ]);
     }
 }

@@ -31,13 +31,18 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {    
-      
-        return Review::create([
-            'user_id' => auth()->id(),
-            'pg_id' => $request->pg_id,
-            'rating' => $request->rating,
-            'comment' => $request->comment
-        ]);
+        //dd($request->all());
+       $review = Review::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'pg_id' => $request->pg_id,
+            ],
+            [
+                'rating' => $request->rating,
+                'comment' => $request->comment,
+            ]
+        );
+        return response()->json($review);
     }
 
     /**

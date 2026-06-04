@@ -31,7 +31,7 @@ class PgFacilityFactory extends Factory
      */
     public function createMultipleRows(int $count = 3, ?int $pgId = null): void
     {
-        $allAmenities = ['wifi', 'ac', 'laundry', 'parking', 'gym', 'cctv', 'power_backup'];
+        $allAmenities = ['wifi', 'ac', 'laundry', 'parking', 'gym', 'cctv', 'power_backup', 'Single-sharing', 'Double-sharing', 'Triple-sharing' ,'Non-Veg-Food','Veg-Food'   ];
         
         // Pick a single PG ID to share across all rows
         $finalPgId = $pgId ?? (Pg::inRandomOrder()->first()?->id ?? Pg::factory()->create()->id);
