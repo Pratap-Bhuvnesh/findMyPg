@@ -36,14 +36,13 @@ class PGInquiryController extends Controller
     public function store(Request $request)
     {   
         $pg = PG::findOrFail($request->pg_id);
-
         $inquiry = PGInquiry::create([
             'pg_id' => $pg->id,
-            'student_name' => $request->student_name,
+            'student_name' => $request->name,
 
-            'student_phone' => $request->student_phone,
+            'student_phone' => $request->phone,
 
-            'student_email' => $request->student_email,
+            'student_email' => $request->email,
 
             'message' => $request->message,
         ]);

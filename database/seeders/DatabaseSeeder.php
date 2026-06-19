@@ -10,6 +10,8 @@ use Database\Seeders\PgFacilitySeeder;
 use Database\Seeders\ReviewSeeder;
 use Database\Seeders\PgImageSeeder;
 use Database\Seeders\PGInquirySeeder;
+use Database\Seeders\UniversitySeeder;
+use Database\Seeders\LeadSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,11 +24,13 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         $this->call([
+            UniversitySeeder::class,
             PgSeeder::class,
             PgFacilitySeeder::class,
             ReviewSeeder::class,
 			PgImageSeeder::class,
-            PGInquirySeeder::class,            
+            PGInquirySeeder::class, 
+            LeadSeeder::class,                       
         ]);
     }
 }

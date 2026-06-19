@@ -8,17 +8,31 @@ use App\Models\PgFacility;
 use App\Models\PgImage;
 use App\Models\Review;
 use App\Models\PGInquiry;
+use App\Models\University;
 
 class PG extends Model{
     use HasFactory;
     protected $table = 'pgs';
     protected $fillable = [
+        'id',
         'owner_id',
         'name',
         'description',
         'price',
+        'gender',
         'location',
         'food_available',
+        'food',
+        'latitude',
+        'longitude',
+        'university_id',
+        'distance',
+        'accomodation_sharing_prices',
+        'accomodation_type',
+        'rent_type',
+    ];
+    protected $casts = [
+        'accomodation_sharing_prices' => 'array',
     ];
     public function owner(){
         return $this->belongsTo(User::class, 'owner_id');
@@ -45,5 +59,9 @@ class PG extends Model{
     public function images()
     {
         return $this->hasMany(PgImage::class, 'pg_id');
+    }
+    public function university()
+    {
+        return $this->belongsTo(University::class);
     }
 }

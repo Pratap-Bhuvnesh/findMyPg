@@ -11,12 +11,14 @@ class WelcomeNotification extends Notification
 {
     use Queueable;
     protected $message;
+    protected $verificationUrl;
     /**
      * Create a new notification instance.
      */
-    public function __construct($message)
+    public function __construct($verificationUrl,$message)
     {
         $this->message = $message;
+         $this->verificationUrl = $verificationUrl;
     }
 
     /**
@@ -24,14 +26,18 @@ class WelcomeNotification extends Notification
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable)
+   /*  public function via(object $notifiable)
     {
-        /*  return (new MailMessage)
+        return (new MailMessage)
         ->subject('Welcome to PGAdda')
         ->greeting('Hello '.$notifiable->name)
         ->line('Your account has been created successfully.')
-        ->line('Thank you for joining us!'); */
-        return ['database'];
+        ->line('Thank you for joining us!');
+        //return ['database'];
+    } */
+   public function via(object $notifiable): array
+    {
+        return ['mail'];
     }
 
     /**
@@ -40,9 +46,10 @@ class WelcomeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+        ->subject('Activate Your Account')
+        ->line('Thank you for registering.')
+        ->action('Verify Email', $this->verificationUrl)
+        ->line('Please verify your email to activate your account.');
     }
 
     /**

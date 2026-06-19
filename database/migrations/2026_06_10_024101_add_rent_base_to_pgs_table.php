@@ -6,14 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-   
     /**
      * Run the migrations.
      */
     public function up(): void
-    { 
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['student', 'owner', 'admin'])->default('student');
+    {
+        Schema::table('pgs', function (Blueprint $table) {
+            $table->string('rent_type')->default('monthly')->after('accomodation_type'); 
         });
     }
 
@@ -21,9 +20,9 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    { 
-        Schema::table('users', function (Blueprint $table) {
-             $table->dropColumn('role');
+    {
+        Schema::table('pgs', function (Blueprint $table) {
+             $table->dropColumn('rent_type');
         });
     }
 };
