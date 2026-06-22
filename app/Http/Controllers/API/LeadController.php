@@ -31,8 +31,7 @@ class LeadController extends Controller
 
     // Agent views own leads
     public function myLeads()
-    {
-        dd(111);
+    {       
         $leads = Lead::with([
             'student:id,name,email,mobile',
             'pg:id,name'

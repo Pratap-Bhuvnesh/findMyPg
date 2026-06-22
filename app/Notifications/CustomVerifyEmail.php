@@ -36,7 +36,7 @@ class CustomVerifyEmail extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject('Activate Your PGAdda Account')
+        ->subject('Activate Your PGLocator Account')
         ->view('emails.activate-account', [
             'user' => $notifiable,
             'url' => $this->activationUrl,

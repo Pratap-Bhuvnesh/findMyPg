@@ -30,6 +30,18 @@ class PGController extends Controller
         if ($request->has('food_available')) {
             $query->where('food_available', $request->boolean('food_available'));
         }
+        if ($request->search) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('pgs.name', 'like', "%{$search}%")
+                ->orWhere('pgs.location', 'like', "%{$search}%")
+                ->orWhereHas('university', function ($uq) use ($search) {
+                    $uq->where('name', 'like', "%{$search}%");
+                });
+            });
+        }
+
         $query->orderBy('updated_at', 'desc');
        
         $pgs = $query->with(['owner:id,name,email,mobile,role',

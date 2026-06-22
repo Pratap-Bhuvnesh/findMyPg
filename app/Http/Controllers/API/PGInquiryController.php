@@ -35,6 +35,7 @@ class PGInquiryController extends Controller
      */
     public function store(Request $request)
     {   
+        
         $pg = PG::findOrFail($request->pg_id);
         $inquiry = PGInquiry::create([
             'pg_id' => $pg->id,
@@ -85,7 +86,29 @@ class PGInquiryController extends Controller
     }
     
     public function pgLeads($pgId){
-        $leads = PGInquiry::with('pg')->where('pg_id', $pgId)->latest()->paginate(3);
-        return response()->json($leads);
+        $leads = PGInquiry::with('pg')->where('pg_id', $pgId)->latest()->paginate(20);
+        $statusCounts = PGInquiry::where('pg_id', $pgId)->select('status', \DB::raw('COUNT(*) as total'))->groupBy('status')->pluck('total', 'status');;
+        return response()->json([
+            'leads' => $leads,
+            'status_counts' => $statusCounts,
+        ]);
+    }
+
+    public function updateStatus(Request $request, $id){
+        $request->validate([
+            'status' => 'required|in:new,contacted,visited,joined,closed'
+        ]);
+
+        $lead = PGInquiry::findOrFail($id);
+
+        $lead->update([
+            'status' => $request->status
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Lead status updated successfully.',
+            'lead' => $lead
+        ]);
     }
 }

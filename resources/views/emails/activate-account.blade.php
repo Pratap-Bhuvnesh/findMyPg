@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Activate Your PGAdda Account</title>
+    <title>Activate Your PGLocator Account</title>
 </head>
 <body style="margin:0;padding:0;background:#f5f7fb;font-family:Arial,Helvetica,sans-serif;">
 
@@ -19,12 +19,12 @@
                 <td align="center" style="background:linear-gradient(135deg,#2563eb,#f97316);padding:40px 20px;">                        
                     <img
                         src="{{ asset('logo.png') }}"
-                        alt="PGAdda"
+                        alt="PGLocator"
                         style="height:70px;margin-bottom:15px;"
                     >
 
                     <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:700;">
-                        Welcome to PGAdda
+                        Welcome to PGLocator
                     </h1>
 
                     <p style="margin-top:10px;color:#e8f0ff;font-size:16px;">
@@ -43,7 +43,7 @@
                     </h2>
 
                     <p style="font-size:16px;line-height:28px;color:#4b5563;">
-                        Thank you for joining <strong>PGAdda</strong>.
+                        Thank you for joining <strong>PGLocator</strong>.
                         Your account has been created successfully.
                     </p>
 
@@ -118,7 +118,7 @@
                 <td style="background:#111827;padding:30px;text-align:center;">
 
                     <h3 style="color:#ffffff;margin-top:0;">
-                        PGAdda
+                        PGLocator
                     </h3>
 
                     <p style="color:#9ca3af;font-size:14px;line-height:24px;">
@@ -130,7 +130,7 @@
                     </p>
 
                     <p style="color:#6b7280;font-size:12px;">
-                        © {{ date('Y') }} PGAdda. All Rights Reserved.
+                        © {{ date('Y') }} PGLocator. All Rights Reserved.
                     </p>
 
                 </td>

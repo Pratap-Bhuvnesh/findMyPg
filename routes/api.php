@@ -18,16 +18,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/addstore', [PGController::class, 'store']);
      Route::get('/pgs/{id}', [PGController::class, 'show']);
-
     Route::put('/pgs/{id}', [PGController::class, 'update']);
-
     Route::delete('/pgs/{id}', [PGController::class, 'destroy']);
-
-    
-    Route::get('/pgs/{pg}/leads',[PGInquiryController::class, 'pgLeads']);
     Route::get('/mypglist', [PGController::class, 'mypglist']);
+
     Route::post('/pgs/{pg}/reviews', [ReviewController::class, 'store'])->middleware('prevent.owner.review');
     //Route::post('/pgs/reviews', [ReviewController::class, 'store'])->middleware('prevent.owner.review');
+
+    Route::get('/pgs/{pg}/leads',[PGInquiryController::class, 'pgLeads']);
+    Route::put('/inquiryleads/{id}/status', [PGInquiryController::class, 'updateStatus']); 
 
     Route::post('/leads', [LeadController::class, 'store']);
     Route::get('/agent/leads', [LeadController::class, 'myLeads']);

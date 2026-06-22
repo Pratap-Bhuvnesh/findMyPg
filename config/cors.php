@@ -9,7 +9,8 @@ return [
     'allowed_origins' => [ 
         'http://localhost:8080',
         'http://127.0.0.1:8080',
-        'https://pglocator.in'
+        'https://pglocator.in',
+		'https://www.pglocator.in'
     ],
 
     'allowed_origins_patterns' => [],
