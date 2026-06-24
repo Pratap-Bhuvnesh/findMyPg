@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\PGInquiryController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\API\VisitorController;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
@@ -40,7 +41,8 @@ Route::get('/universities', [UniversityController::class, 'index']);
 Route::post('/activate-account', [AuthController::class, 'activateAccount']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
-
+Route::post('/visitor-track', [VisitorController::class, 'track']);
+Route::get('/visitor-count', [VisitorController::class, 'count']);
 Route::get('/test-mail', function () {
     Mail::raw('This is a test email from Laravel.', function ($message) {
         $message->to('pratapp.singh4@gmail.com')
