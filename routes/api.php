@@ -16,9 +16,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
     });
-
+    Route::post('/user', [AuthController::class, 'updateProfile']);
     Route::post('/addstore', [PGController::class, 'store']);
-     Route::get('/pgs/{id}', [PGController::class, 'show']);
+    Route::get('/pgs/{id}', [PGController::class, 'show']);
     Route::put('/pgs/{id}', [PGController::class, 'update']);
     Route::delete('/pgs/{id}', [PGController::class, 'destroy']);
     Route::get('/mypglist', [PGController::class, 'mypglist']);

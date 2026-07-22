@@ -47,7 +47,7 @@ class PGController extends Controller
         $pgs = $query->with(['owner:id,name,email,mobile,role',
         'images:id,pg_id,image_path,image_type,display_order','university',
         'reviews.user', 'amenities:pg_id,amenities,available'
-        ])->withCount('reviews')->withAvg('reviews', 'rating')->paginate(45);        
+        ])->withCount('reviews')->withAvg('reviews', 'rating')->paginate(9);        
        
         /* if ($pgs->isNotEmpty()) {
            
@@ -76,7 +76,8 @@ class PGController extends Controller
             'description' => 'required|string|max:255',            
             'location' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'amenities' => 'required',            
+            'amenities' => 'required',   
+            //'food' => 'required',            
             'latitude' => 'required|string|max:255',
             'longitude' => 'required|string|max:255',      
             'rent_type' => 'required|string',         
@@ -128,7 +129,7 @@ class PGController extends Controller
         $recievedInput = [
             'owner_id' => auth()->id(),                
             'food_available' => !empty($request->food) || in_array('Food', $request->amenities ?? []) ? 1 : 0,
-            'food' => $request->food,
+            'food' => $request->food ? $request->food : null,
             'name' => $request->name,
             'description' => $request->description,
             'price' => collect($request->sharingPrices)->filter()->min(),

@@ -64,4 +64,11 @@ class PG extends Model{
     {
         return $this->belongsTo(University::class);
     }
+    protected static function booted(){
+        static::saving(function ($pg) {
+            if (is_null($pg->food)) {
+                $pg->food_available = 0;
+            }
+        });
+    }
 }

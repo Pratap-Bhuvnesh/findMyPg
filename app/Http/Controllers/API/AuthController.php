@@ -10,6 +10,8 @@ use App\Notifications\CustomVerifyEmail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -41,7 +43,7 @@ class AuthController extends Controller
             ], 403);
         }
         $token = $user->createToken('api-token')->plainTextToken;
-        $userdetail = User::select(['name','email','id','role','mobile'])->where('email', $request->email)->first();
+        $userdetail = User::select(['name','email','id','role','mobile','meta'])->where('email', $request->email)->first();
         return response()->json([
             'token' => $token,
             'user' => $userdetail
@@ -101,86 +103,123 @@ class AuthController extends Controller
         ]);
     }
     public function forgotPassword(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|email'
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
 
-    if ($validator->fails()) {
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $token = Str::random(64);
+
+        DB::table('password_resets')
+            ->updateOrInsert(
+                ['email' => $request->email],
+                [
+                    'token' => $token,
+                    'created_at' => now()
+                ]
+            );
+
+        $resetUrl = "http://localhost:8080/reset-password?token=".$token;
+
+        $user->notify(new ForgotPasswordNotification($resetUrl));
+
         return response()->json([
-            'message' => 'Validation failed',
-            'errors' => $validator->errors()
-        ], 422);
+            'message' => 'Password reset link sent to your email.'
+        ]);
     }
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'password' => 'required|min:6|confirmed'
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-    if (!$user) {
+        $reset = DB::table('password_resets')
+            ->where('token', $request->token)
+            ->first();
+
+        if (!$reset) {
+            return response()->json([
+                'message' => 'Invalid reset token'
+            ], 404);
+        }
+
+        $user = User::where('email', $reset->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        DB::table('password_resets')
+            ->where('email', $user->email)
+            ->delete();
+
         return response()->json([
-            'message' => 'User not found'
-        ], 404);
+            'message' => 'Password reset successfully'
+        ]);
     }
+    public function updateProfile(Request $request)
+    {     
+        $user = $request->user();
+        $validator = Validator::make($request->all(), [
+            'name'   => 'required|string|max:255',            
+            'mobile' => 'required|string|max:15',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',        
+        ]);
 
-    $token = Str::random(64);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $meta = $user->meta ?? [];
 
-    DB::table('password_resets')
-        ->updateOrInsert(
-            ['email' => $request->email],
-            [
-                'token' => $token,
-                'created_at' => now()
-            ]
-        );
+        if ($request->hasFile('profile_image')) {
+             // Delete old image if exists
+            if (!empty($meta['profile_image']) && Storage::disk('public')->exists($meta['profile_image'])) {
+                Storage::disk('public')->delete($meta['profile_image']);
+            }
+            $path = $request->file('profile_image')->store('profile', 'public');
+            $meta['profile_image'] = $path;
+        }
+       
+        $user->update([
+            'name'   => $request->name,            
+            'mobile' => $request->mobile,
+            'meta'   => $meta,
+        ]);
 
-    $resetUrl = "http://localhost:8080/reset-password?token=".$token;
-
-    $user->notify(new ForgotPasswordNotification($resetUrl));
-
-    return response()->json([
-        'message' => 'Password reset link sent to your email.'
-    ]);
-}
-public function resetPassword(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'token' => 'required',
-        'password' => 'required|min:6|confirmed'
-    ]);
-
-    if ($validator->fails()) {
         return response()->json([
-            'message' => 'Validation failed',
-            'errors' => $validator->errors()
-        ], 422);
+            'message' => 'Profile updated successfully',
+            'user' => $user,
+        ], 200);
     }
-
-    $reset = DB::table('password_resets')
-        ->where('token', $request->token)
-        ->first();
-
-    if (!$reset) {
-        return response()->json([
-            'message' => 'Invalid reset token'
-        ], 404);
-    }
-
-    $user = User::where('email', $reset->email)->first();
-
-    if (!$user) {
-        return response()->json([
-            'message' => 'User not found'
-        ], 404);
-    }
-
-    $user->password = Hash::make($request->password);
-    $user->save();
-
-    DB::table('password_resets')
-        ->where('email', $user->email)
-        ->delete();
-
-    return response()->json([
-        'message' => 'Password reset successfully'
-    ]);
-}
 }

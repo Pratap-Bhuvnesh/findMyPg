@@ -25,7 +25,8 @@ class User extends Authenticatable
         'password',
         'role',
         'activation_token',
-        'mobile'
+        'mobile',
+        'meta',
     ];
 
     /**
@@ -37,6 +38,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'activation_token',
+    ];
+
+    protected $casts = [
+        'meta' => 'array',
     ];
 
     /**
