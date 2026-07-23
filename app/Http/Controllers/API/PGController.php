@@ -22,7 +22,6 @@ class PGController extends Controller
         if ($request->min_price) {
             $query->where('price', '>=', $request->min_price);
         }
-
         if ($request->max_price) {
             $query->where('price', '<=', $request->max_price);
         }
@@ -34,7 +33,7 @@ class PGController extends Controller
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where('pgs.name', 'like', "%{$search}%")
+                $q->where('pgs.name', 'like', "%{$search}%")                
                 ->orWhere('pgs.location', 'like', "%{$search}%")
                 ->orWhereHas('university', function ($uq) use ($search) {
                     $uq->where('name', 'like', "%{$search}%");
@@ -44,29 +43,11 @@ class PGController extends Controller
 
         $query->orderBy('updated_at', 'desc');
        
-        $pgs = $query->with(['owner:id,name,email,mobile,role',
+        $pgs = $query->with(['owner:id,name,email,mobile,role,meta',
         'images:id,pg_id,image_path,image_type,display_order','university',
         'reviews.user', 'amenities:pg_id,amenities,available'
         ])->withCount('reviews')->withAvg('reviews', 'rating')->paginate(9);        
-       
-        /* if ($pgs->isNotEmpty()) {
-           
-            // 3. Collect all parent IDs to fetch images in bulk
-            $pgIds = $pgs->pluck('id')->toArray();
-
-            // 4. Run exactly ONE bulk database query for all relevant images
-            $allImages = DB::table('pg_images')
-                ->select(id,image_path, image_type, display_order')
-                ->whereIn('pg_id', $pgIds)
-                ->orderBy('display_order', 'asc')
-                ->get()
-                ->groupBy('pg_id'); // Groups items by their pg_id automatically
-             // 5. Map the pre-grouped images onto each PG model row
-            $pgs->each(function ($pg) use ($allImages) {
-                // Assign the grouped collection, or an empty collection if no images exist
-                $pg->images = $allImages->get($pg->id, collect([]));
-            });
-        }   */      
+              
         return response()->json($pgs);
     }
 
