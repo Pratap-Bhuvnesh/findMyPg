@@ -40,10 +40,6 @@ class User extends Authenticatable
         'activation_token',
     ];
 
-    protected $casts = [
-        'meta' => 'array',
-    ];
-
     /**
      * Get the attributes that should be cast.
      *
@@ -54,6 +50,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+             'meta' => 'array',
         ];
     }
 
